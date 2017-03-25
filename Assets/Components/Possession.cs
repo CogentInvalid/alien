@@ -24,18 +24,23 @@ public class Possession : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown(KeyCode.C)) {
+
 			if (currentControl != gameObject) {
-				currentControl.GetComponent<PlatformerController>().controlled = false;
-				gameObject.GetComponent<PlatformerController>().controlled = true;
-				currentControl = gameObject;
+				SetControlledObject(gameObject);
 			} else if (closestEnemy != null) {
-				currentControl.GetComponent<PlatformerController>().controlled = false;
-				closestEnemy.GetComponent<PlatformerController>().controlled = true;
-				currentControl = closestEnemy;
+				SetControlledObject(closestEnemy);
 			}
+
 		}
 
+	}
 
+	void SetControlledObject(GameObject obj) {
+		currentControl.GetComponent<PlatformerController>().controlled = false;
+		obj.GetComponent<PlatformerController>().controlled = true;
+		currentControl = obj;
+
+		Camera.main.GetComponent<CameraScript>().target = obj;
 	}
 
 }

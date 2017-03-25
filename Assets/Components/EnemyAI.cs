@@ -12,7 +12,7 @@ public class EnemyAI : MonoBehaviour {
 	public Color alertColor;
 	public Color hostileColor;
 
-	float direction;
+	public float direction;
 
 	public FloorSensor leftSensor;
 	public FloorSensor rightSensor;
@@ -34,8 +34,10 @@ public class EnemyAI : MonoBehaviour {
 			if (fov.SeesTarget) OnSeePlayer();
 			else OnNotSeePlayer();
 
-			if (!leftSensor.touchingFloor) direction = 1;
-			if (!rightSensor.touchingFloor) direction = -1;
+			if (controller.onGround) {
+				if (!leftSensor.touchingFloor) direction = 1;
+				if (!rightSensor.touchingFloor) direction = -1;
+			}
 
 			Walk(direction);
 		} else {

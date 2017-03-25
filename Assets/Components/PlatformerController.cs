@@ -18,7 +18,7 @@ public class PlatformerController : MonoBehaviour {
 	public float highGravScale = 5;
 	bool highGravity = false;
 
-	private bool onGround;
+	public bool onGround;
 	private float groundTime = 0.1f;
 	private float groundTimer;
 
@@ -46,6 +46,10 @@ public class PlatformerController : MonoBehaviour {
 			if (Input.GetButton("Down")) moveDir.y--;
 			if (Input.GetButton("Left")) moveDir.x--;
 			if (Input.GetButton("Right")) moveDir.x++;
+
+			if (GetComponent<EnemyAI>() != null && moveDir.x != 0) {
+				GetComponent<EnemyAI>().direction = moveDir.x;
+			}
 
 			if (Input.GetKeyDown(KeyCode.X)) PressButton();
 		}

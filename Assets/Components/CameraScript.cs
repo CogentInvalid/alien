@@ -2,7 +2,7 @@
 
 public class CameraScript : MonoBehaviour {
 
-	public GameObject player;
+	public GameObject target;
 
 	public float speed = 3;
 	public Vector2 offset;
@@ -13,10 +13,10 @@ public class CameraScript : MonoBehaviour {
 	
 	void Update () {
 		Vector3 pos = transform.position;
-		Vector2 playerPos = player.transform.position;
+		Vector2 targetPos = target.transform.position;
 
-		pos.x -= (pos.x - playerPos.x + offset.x)*speed*Time.deltaTime;
-		pos.y -= (pos.y - playerPos.y + offset.y)*speed*Time.deltaTime;
+		pos.x -= (pos.x - targetPos.x + offset.x)*speed*Time.deltaTime;
+		pos.y -= (pos.y - targetPos.y + offset.y)*speed*Time.deltaTime;
 
 		transform.position = pos;
 	}
