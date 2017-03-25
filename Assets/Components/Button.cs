@@ -35,9 +35,13 @@ public class Button : MonoBehaviour {
 		else sprite.color = normalColor;
 
 		if (Input.GetKeyDown(KeyCode.X) && active) {
-			Debug.Log("yup");
-			onPressed.Invoke();
+			Press();
 		}
 
 	}
+
+	public void Press() {
+		onPressed.Invoke();
+	}
+
 }
