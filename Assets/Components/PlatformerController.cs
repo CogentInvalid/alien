@@ -41,6 +41,8 @@ public class PlatformerController : MonoBehaviour {
 		//buttons
 		HoverButton();
 
+		bool applyGravity = true;
+
 		if (controlled) {
 			if (Input.GetButton("Up")) moveDir.y++;
 			if (Input.GetButton("Down")) moveDir.y--;
@@ -52,6 +54,15 @@ public class PlatformerController : MonoBehaviour {
 			}
 
 			if (Input.GetKeyDown(KeyCode.X)) PressButton();
+
+			//ladder
+			if (onLadder) {
+				if (Input.GetKey(KeyCode.UpArrow)) {
+					applyGravity = false;
+					vel.y -= (vel.y - 6) * 6*Time.deltaTime;
+				}
+			}
+			onLadder = false;
 		}
 
 		//movement
@@ -66,17 +77,6 @@ public class PlatformerController : MonoBehaviour {
 
 		if (Input.GetButtonUp("Jump")) highGravity = true;
 		if (vel.y < 0) highGravity = false;
-
-		bool applyGravity = true;
-
-		//ladder
-		if (onLadder) {
-			if (Input.GetKey(KeyCode.UpArrow)) {
-				applyGravity = false;
-				vel.y -= (vel.y - 6) * 6*Time.deltaTime;
-			}
-		}
-		onLadder = false;
 
 		//gravity
 		if (applyGravity) {
