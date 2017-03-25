@@ -21,6 +21,11 @@ public class EnemyAI : MonoBehaviour {
 	Rigidbody2D phys;
 	PlatformerController controller;
 
+	public GameObject bullet;
+
+	public float shootTime = 0.4f;
+	float shootTimer = 0f;
+
 	void Start() {
 		sprite = GetComponent<SpriteRenderer>();
 		phys = GetComponent<Rigidbody2D>();
@@ -48,6 +53,10 @@ public class EnemyAI : MonoBehaviour {
 		if (alert > 0) sprite.color = alertColor;
 		if (alert == 1) sprite.color = hostileColor;
 
+		if (alert == 1) {
+			ShootPlayer();
+		}
+
 		SetEyePosition(controller.vel.x);
 
 	}
@@ -60,6 +69,15 @@ public class EnemyAI : MonoBehaviour {
 		phys.velocity = vel;*/
 
 		controller.moveDir = new Vector2(direction, 0);
+	}
+
+	void ShootPlayer() {
+		shootTimer -= Time.deltaTime;
+		if (shootTimer <= 0) {
+			shootTimer = shootTime;
+			GameObject bulletInstance = Instantiate<GameObject>(bullet, fov.transform.position, new Quaternion());
+			bulletInstance.GetComponent<Bullet>().velocity = (fov.target.transform.position-fov.transform.position).normalized*12;
+		}
 	}
 
 	void SetEyePosition(float direction) {

@@ -153,7 +153,7 @@ public class PlatformerController : MonoBehaviour {
 
 	void CheckHitGround(Collision2D collision) {
 		if (collision.contacts[0].normal.y > 0.5f) {
-			if (onGround) vel.y = -0.1f;
+			if (onGround && vel.y < 0) vel.y = -0.1f;
 			onGround = true;
 			groundTimer = groundTime;
 		}

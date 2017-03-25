@@ -14,11 +14,13 @@ public class FieldOfView : MonoBehaviour {
 
 	public bool SeesTarget {
 		get {
-			Vector2 playerDir = target.transform.position-transform.position;
+			if (target != null) {
+				Vector2 playerDir = target.transform.position-transform.position;
 
-			if (Vector2.Angle(direction, playerDir) < angle) {
-				RaycastHit2D hit = Physics2D.Raycast(transform.position, playerDir, distance);
-				if (hit) return hit.transform.name == "Player";
+				if (Vector2.Angle(direction, playerDir) < angle) {
+					RaycastHit2D hit = Physics2D.Raycast(transform.position, playerDir, distance);
+					if (hit) return hit.transform.name == "Player";
+				}
 			}
 			
 			return false;
