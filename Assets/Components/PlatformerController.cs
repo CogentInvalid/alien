@@ -48,9 +48,7 @@ public class PlatformerController : MonoBehaviour {
 
 		//jumping
 		if (Input.GetButtonDown("Jump") && onGround) {
-			vel.y = jumpForce;
-			onGround = false;
-			highGravity = false;
+			Jump(jumpForce);
 		}
 
 		if (Input.GetButtonUp("Jump")) highGravity = true;
@@ -64,6 +62,12 @@ public class PlatformerController : MonoBehaviour {
 			vel.y -= lowGravScale * Time.deltaTime;
 
 		phys.velocity = vel;
+	}
+
+	public void Jump(float force) {
+		vel.y = force;
+		onGround = false;
+		highGravity = false;
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision) {
