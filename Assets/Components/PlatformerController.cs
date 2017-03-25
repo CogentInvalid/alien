@@ -4,6 +4,10 @@ public class PlatformerController : MonoBehaviour {
 
 	private Rigidbody2D phys;
 
+	public bool controlled = false;
+
+	public bool buttonPermissions = true;
+
 	public float speed = 5;
 	public float accel = 5;
 	public float friction = 8;
@@ -18,11 +22,13 @@ public class PlatformerController : MonoBehaviour {
 	private float groundTime = 0.1f;
 	private float groundTimer;
 
-	Vector2 vel;
+	public Vector2 vel;
+	public Vector2 moveDir;
 	
 	void Start () {
 		phys = GetComponent<Rigidbody2D>();
 		groundTimer = groundTime;
+		moveDir = new Vector2();
 	}
 	
 	void Update () {
@@ -30,24 +36,24 @@ public class PlatformerController : MonoBehaviour {
 		groundTimer -= Time.deltaTime;
 		if (groundTimer <= 0) onGround = false;
 
-		Vector2 moveDir = new Vector2(0, 0);
-		if (Input.GetButton("Up")) moveDir.y++;
-		if (Input.GetButton("Down")) moveDir.y--;
-		if (Input.GetButton("Left")) moveDir.x--;
-		if (Input.GetButton("Right")) moveDir.x++;
+		//buttons
+		HoverButton();
 
-		//movement
-		float xMove = 0; float yMove = 0;
-		if (moveDir.x != 0) xMove = -(vel.x - speed*moveDir.x) * accel*Time.deltaTime;
-		//if (moveDir.y != 0) yMove = -(vel.y - speed*moveDir.y) * accel*Time.deltaTime;
-		vel.x += xMove; vel.y += yMove;
+		if (controlled) {
+			if (Input.GetButton("Up")) moveDir.y++;
+			if (Input.GetButton("Down")) moveDir.y--;
+			if (Input.GetButton("Left")) moveDir.x--;
+			if (Input.GetButton("Right")) moveDir.x++;
 
-		//friction
-		Vector2 fric = new Vector2();
-		if (xMove == 0) vel.x -= vel.x*friction*Time.deltaTime;
+			if (Input.GetKeyDown(KeyCode.X)) PressButton();
+		}
+
+		Move(moveDir);
+
+		moveDir = new Vector2(0, 0);
 
 		//jumping
-		if (Input.GetButtonDown("Jump") && onGround) {
+		if (Input.GetButtonDown("Jump") && onGround && controlled) {
 			Jump(jumpForce);
 		}
 
@@ -62,6 +68,42 @@ public class PlatformerController : MonoBehaviour {
 			vel.y -= lowGravScale * Time.deltaTime;
 
 		phys.velocity = vel;
+
+	}
+
+	public Button GetClosestButton() {
+		Button[] buttons = GameObject.FindObjectsOfType<Button>();
+
+		//find closest button
+		float minDist = 9999;
+		Button closestButton = null;
+		foreach (Button button in buttons) {
+			float dist = Vector2.Distance(transform.position, button.transform.position);
+			if (dist < 2 && dist < minDist) {
+				minDist = dist;
+				closestButton = button;
+			}
+		}
+
+		return closestButton;
+	}
+
+	public void HoverButton() {
+		Button button = GetClosestButton();
+		if (button != null && buttonPermissions) button.hovered = true;
+	}
+
+	public void PressButton() {
+		Button button = GetClosestButton();
+		if (button != null && buttonPermissions) button.Press();
+	}
+
+	public void Move(Vector2 moveDir) {
+		//movement
+		if (moveDir.x != 0) vel.x -= (vel.x - speed*moveDir.x) * accel*Time.deltaTime;
+
+		//friction
+		if (moveDir.x == 0) vel.x -= vel.x*friction*Time.deltaTime;
 	}
 
 	public void Jump(float force) {
