@@ -112,8 +112,14 @@ public class PlatformerController : MonoBehaviour {
 		highGravity = false;
 	}
 
+	//private void OnCollisionEnter2D(Collision2D collision) {
+	//	CheckHitGround(collision);
+	//}
+
 	private void OnCollisionEnter2D(Collision2D collision) {
-		CheckHitGround(collision);
+		if (collision.contacts[0].normal.x < -0.8f) vel.x = 0.01f;
+		if (collision.contacts[0].normal.x > 0.8f) vel.x = -0.01f;
+		if (collision.contacts[0].normal.y < -0.8f) vel.y = -0.01f;
 	}
 
 	private void OnCollisionStay2D(Collision2D collision) {
