@@ -22,6 +22,8 @@ public class PlatformerController : MonoBehaviour {
 	private float groundTime = 0.1f;
 	private float groundTimer;
 
+	private bool onLadder;
+
 	public Vector2 vel;
 	public Vector2 moveDir;
 	
@@ -48,6 +50,7 @@ public class PlatformerController : MonoBehaviour {
 			if (Input.GetKeyDown(KeyCode.X)) PressButton();
 		}
 
+		//movement
 		Move(moveDir);
 
 		moveDir = new Vector2(0, 0);
@@ -58,14 +61,26 @@ public class PlatformerController : MonoBehaviour {
 		}
 
 		if (Input.GetButtonUp("Jump")) highGravity = true;
-
 		if (vel.y < 0) highGravity = false;
 
+		bool applyGravity = true;
+
+		//ladder
+		if (onLadder) {
+			if (Input.GetKey(KeyCode.UpArrow)) {
+				applyGravity = false;
+				vel.y -= (vel.y - 6) * 6*Time.deltaTime;
+			}
+		}
+		onLadder = false;
+
 		//gravity
-		if (highGravity)
-			vel.y -= highGravScale * Time.deltaTime;
-		else
-			vel.y -= lowGravScale * Time.deltaTime;
+		if (applyGravity) {
+			if (highGravity)
+				vel.y -= highGravScale * Time.deltaTime;
+			else
+				vel.y -= lowGravScale * Time.deltaTime;
+		}
 
 		phys.velocity = vel;
 
@@ -115,6 +130,12 @@ public class PlatformerController : MonoBehaviour {
 	//private void OnCollisionEnter2D(Collision2D collision) {
 	//	CheckHitGround(collision);
 	//}
+
+	private void OnTriggerStay2D(Collider2D collision) {
+		if (collision.tag == "Ladder") {
+			onLadder = true;
+		}
+	}
 
 	private void OnCollisionEnter2D(Collision2D collision) {
 		if (collision.contacts[0].normal.x < -0.8f) vel.x = 0.01f;
