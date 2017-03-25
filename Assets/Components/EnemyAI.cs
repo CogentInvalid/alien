@@ -4,8 +4,9 @@ public class EnemyAI : MonoBehaviour {
 
 	public FieldOfView fov;
 
-	float alert = 0;
+	public float moveSpeed = 1;
 
+	float alert = 0;
 	public float alertSpeed = 1;
 	public float relaxSpeed = 1;
 
@@ -35,20 +36,19 @@ public class EnemyAI : MonoBehaviour {
 		if (alert > 0) sprite.color = alertColor;
 		if (alert == 1) sprite.color = hostileColor;
 
-		if (!rightSensor.touchingFloor) {
-			direction = -1;
-		}
-
-		if (!leftSensor.touchingFloor) {
-			direction = 1;
-		}
+		if (!leftSensor.touchingFloor) direction = 1;
+		if (!rightSensor.touchingFloor) direction = -1;
 
 		SetEyePosition(direction);
+		Walk(direction);
+	}
 
+	void Walk(float direction) {
 		Vector2 vel = phys.velocity;
-		vel.x -= (vel.x - direction)*200*Time.deltaTime;
+		vel.x -= (vel.x - direction*moveSpeed)*3*Time.deltaTime;
+		if (vel.x > 4) vel.x = 4;
+		if (vel.x < -4) vel.x = -4;
 		phys.velocity = vel;
-
 	}
 
 	void SetEyePosition(float direction) {
@@ -57,13 +57,11 @@ public class EnemyAI : MonoBehaviour {
 	}
 
 	void OnSeePlayer() {
-		GetComponent<SpriteRenderer>().color = Color.red;
 		alert += alertSpeed*Time.deltaTime;
 		if (alert > 1) alert = 1;
 	}
 
 	void OnNotSeePlayer() {
-		GetComponent<SpriteRenderer>().color = Color.blue;
 		alert -= relaxSpeed*Time.deltaTime;
 		if (alert < 0) alert = 0;
 	}
