@@ -2,6 +2,8 @@
 
 public class EnemyAI : MonoBehaviour {
 
+	public bool patrol = true;
+
 	public FieldOfView fov;
 
 	float alert = 0;
@@ -39,12 +41,15 @@ public class EnemyAI : MonoBehaviour {
 			if (fov.SeesTarget) OnSeePlayer();
 			else OnNotSeePlayer();
 
-			if (controller.onGround) {
-				if (!leftSensor.touchingFloor) direction = 1;
-				if (!rightSensor.touchingFloor) direction = -1;
-			}
+			if (patrol) {
+				if (controller.onGround) {
+					if (!leftSensor.touchingFloor) direction = 1;
+					if (!rightSensor.touchingFloor) direction = -1;
+				}
 
-			Walk(direction);
+				Walk(direction);
+			}
+			
 		} else {
 			OnNotSeePlayer();
 		}
@@ -81,6 +86,7 @@ public class EnemyAI : MonoBehaviour {
 	}
 
 	void SetEyePosition(float direction) {
+		if (direction == 0) direction = this.direction;
 		direction = Mathf.Sign(direction);
 		fov.GetComponent<FollowObject>().offset = new Vector3(0.24f*direction, 0.3f, 0);
 		fov.direction = new Vector2(direction, 0);
@@ -97,7 +103,7 @@ public class EnemyAI : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision) {
-		if (!controller.controlled) {
+		if (!controller.controlled && patrol) {
 			if (collision.contacts[0].normal.x > 0.75f) direction = 1;
 			if (collision.contacts[0].normal.x < -0.75f) direction = -1;
 		}

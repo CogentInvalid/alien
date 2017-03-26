@@ -23,6 +23,7 @@ public class PlatformerController : MonoBehaviour {
 	private float groundTimer;
 
 	private bool onLadder;
+	private float ladderTimer = 0.1f;
 
 	public Vector2 vel;
 	public Vector2 moveDir;
@@ -62,7 +63,11 @@ public class PlatformerController : MonoBehaviour {
 					vel.y -= (vel.y - 6) * 6*Time.deltaTime;
 				}
 			}
-			onLadder = false;
+
+			ladderTimer -= Time.deltaTime;
+			if (ladderTimer < 0) {
+				onLadder = false;
+			}
 		}
 
 		//movement
@@ -138,13 +143,16 @@ public class PlatformerController : MonoBehaviour {
 	private void OnTriggerStay2D(Collider2D collision) {
 		if (collision.tag == "Ladder") {
 			onLadder = true;
+			ladderTimer = 0.1f;
 		}
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision) {
-		if (collision.contacts[0].normal.x < -0.8f) vel.x = 0.01f;
-		if (collision.contacts[0].normal.x > 0.8f) vel.x = -0.01f;
-		if (collision.contacts[0].normal.y < -0.8f) vel.y = -0.01f;
+		if (collision.contacts[0].otherCollider.tag == "Wall") {
+			if (collision.contacts[0].normal.x < -0.8f) vel.x = 0.01f;
+			if (collision.contacts[0].normal.x > 0.8f) vel.x = -0.01f;
+			if (collision.contacts[0].normal.y < -0.8f) vel.y = -0.01f;
+		}
 	}
 
 	private void OnCollisionStay2D(Collision2D collision) {
