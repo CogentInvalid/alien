@@ -148,7 +148,7 @@ public class PlatformerController : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision) {
-		if (collision.contacts[0].otherCollider.tag == "Wall") {
+		if (collision.collider.tag == "Wall") {
 			if (collision.contacts[0].normal.x < -0.8f) vel.x = 0.01f;
 			if (collision.contacts[0].normal.x > 0.8f) vel.x = -0.01f;
 			if (collision.contacts[0].normal.y < -0.8f) vel.y = -0.01f;
