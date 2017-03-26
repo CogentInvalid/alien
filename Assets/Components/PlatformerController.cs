@@ -134,6 +134,7 @@ public class PlatformerController : MonoBehaviour {
 		vel.y = force;
 		onGround = false;
 		highGravity = false;
+		if (tag == "Player") GameObject.Find("jump").GetComponent<AudioSource>().Play();
 	}
 
 	//private void OnCollisionEnter2D(Collision2D collision) {

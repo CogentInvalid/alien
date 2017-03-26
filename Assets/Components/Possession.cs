@@ -27,8 +27,10 @@ public class Possession : MonoBehaviour {
 
 			if (currentControl != gameObject) {
 				SetControlledObject(gameObject);
+				GameObject.Find("controlend").GetComponent<AudioSource>().Play();
 			} else if (closestEnemy != null) {
 				SetControlledObject(closestEnemy);
+				GameObject.Find("controlstart").GetComponent<AudioSource>().Play();
 			}
 
 		}
@@ -36,7 +38,9 @@ public class Possession : MonoBehaviour {
 	}
 
 	void SetControlledObject(GameObject obj) {
-		currentControl.GetComponent<PlatformerController>().controlled = false;
+		if (currentControl != null) {
+			currentControl.GetComponent<PlatformerController>().controlled = false;
+		}
 		obj.GetComponent<PlatformerController>().controlled = true;
 		currentControl = obj;
 

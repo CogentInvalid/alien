@@ -9,6 +9,7 @@ public class KeycardHolder : MonoBehaviour {
 		if (collision.tag == "Keycard") {
 			Destroy(collision.gameObject);
 			cards.Add(collision.GetComponent<Keycard>().id);
+			GameObject.Find("itempickup").GetComponent<AudioSource>().Play();
 		}
 
 		if (collision.tag == "KeycardSlot") {

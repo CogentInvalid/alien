@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 753ec6e77347a754597dae54636ad47d
-timeCreated: 1490474494
+timeCreated: 1490548059
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -810,6 +810,7 @@ TextureImporter:
     21301606: scifi_platformTiles_32x32_803
     21301608: scifi_platformTiles_32x32_804
     21301610: ladder
+    21301612: box2
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -2743,32 +2744,6 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: scifi_platformTiles_32x32_145
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 576
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: scifi_platformTiles_32x32_146
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 576
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
       name: scifi_platformTiles_32x32_147
       rect:
         serializedVersion: 2
@@ -3163,32 +3138,6 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 544
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: scifi_platformTiles_32x32_180
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 544
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: scifi_platformTiles_32x32_181
-      rect:
-        serializedVersion: 2
-        x: 192
         y: 544
         width: 32
         height: 32
@@ -10668,7 +10617,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -10680,6 +10629,19 @@ TextureImporter:
         y: 352
         width: 64
         height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: box2
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 544
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
