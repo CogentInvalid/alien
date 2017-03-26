@@ -7,14 +7,14 @@ public class Spawner : MonoBehaviour {
 	float timer;
 	
 	void Start () {
-		timer = spawnRate;
+		timer = Random.Range(0, spawnRate);
 	}
 	
 	void Update () {
 		timer -= Time.deltaTime;
 		if (timer <= 0) {
 			timer = spawnRate;
-			Instantiate(spawnObject, transform.position, new Quaternion());
+			GameObject s = Instantiate(spawnObject, transform.position, new Quaternion());
 		}
 	}
 }
